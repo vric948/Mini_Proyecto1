@@ -35,7 +35,7 @@ class Menus {
         }
     }
     public void menuListaEmpleados() {
-        System.out.println("A continuación se muestra la lista de empleados actuales");
+        System.out.println("A continuación se muestra la lista de empleados actuales\n");
         empleados.listarEmpleados();
         System.out.println("Si desea regresar al menú principal ingrese: 1");
         System.out.println("Si desea salir del programa, ingrese cualquier otro número");
@@ -66,7 +66,7 @@ class Menus {
 
         System.out.println("Ingrese el salario del empleado:");
         while (!input.hasNextDouble()) {
-            System.out.println("Salario inválido. Ingrese un número decimal:");
+            System.out.println("Salario inválido. Ingrese un número con decimal:");
             input.next();
         }
         double salario = input.nextDouble();
@@ -74,7 +74,7 @@ class Menus {
 
         empleados.contratarEmpleado(nombre, edad, salario);
 
-        System.out.println("Empleado contratado con éxito");
+        System.out.println("El empleado ha quedado resgistrado");
 
         menuBienvenida();
     }
@@ -84,21 +84,20 @@ class Menus {
 
         empleados.despedirEmpleado(nombre);
 
-        System.out.println("Empleado despedido con éxito");
+        System.out.println("El empleado ha sido movido a la lista de despedidos");
 
         menuBienvenida();
     }
     public void menuModificarSalario() {
         System.out.println("Ingrese el nombre del empleado:");
         String nombre = input.nextLine();
-        System.out.println("Ingrese el porcentaje de aumento:");
+        System.out.println("Ingrese el porcentaje de sueldo que quier aumentar:");
         double porcentaje = input.nextDouble();
         input.nextLine();
 
         empleados.modificarSalario(nombre, porcentaje);
 
-        System.out.println("Salario actualizado con éxito");
-
+        System.out.println("El salario ha sido modificado");
         menuBienvenida();
     }
 }
