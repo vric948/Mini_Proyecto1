@@ -1,18 +1,20 @@
 import java.util.Scanner;
 
-public class Menus {
+class Menus {
     Scanner input = new Scanner(System.in);
     int opcion;
+    Empleados empleados = new Empleados();
+
     public void menuBienvenida() {
-        System.out.println("Bienvenido, seleccione a continuacion una de las opciones:");
-        System.out.println("Si desea ingresar a la lista de empleados ingrese: 1");
-        System.out.println("Si desea ingresar a la seccion de contratacion ingrese: 2");
-        System.out.println("Si desea ingresar a la sección de terminacion de contrato ingrese: 3");
-        System.out.println("Si desea ingresar a la seccion de modificacion de sueldo ingrese: 4");
-        System.out.println("Si desea salir del programa puede ingresar cualquier otro caracter/numero");
+        System.out.println("Bienvenido, seleccione a continuación una de las opciones:");
+        System.out.println("1. Ingresar a la lista de empleados");
+        System.out.println("2. Sección de contratación");
+        System.out.println("3. Sección de terminación de contrato");
+        System.out.println("4. Sección de modificación de sueldo");
+        System.out.println("0. Salir del programa");
         System.out.println();
 
-        opcion = input.nextInt();
+        opcion = Integer.parseInt(input.nextLine());
 
         switch (opcion) {
             case 1:
@@ -33,14 +35,13 @@ public class Menus {
         }
     }
     public void menuListaEmpleados() {
-        Empleados listaEmplados = new Empleados();
-        System.out.println("A continuacion se muestra la lista de empleados actuales");
-        listaEmplados.nombreEmpleados();
-
-        System.out.println("Si desea regresar al menu principal ingrese: 1");
-        System.out.println("Si desea salir del programa, ingrese cualquier otro caracter/numero");
+        System.out.println("A continuación se muestra la lista de empleados actuales");
+        empleados.listarEmpleados();
+        System.out.println("Si desea regresar al menú principal ingrese: 1");
+        System.out.println("Si desea salir del programa, ingrese cualquier otro número");
 
         opcion = input.nextInt();
+        input.nextLine();
 
         switch (opcion) {
             case 1:
@@ -52,82 +53,52 @@ public class Menus {
         }
     }
     public void menuContrataciones() {
-        System.out.println("Si desea registrar un nuevo empleado contratado ingrese: 1");
-        System.out.println("Si desea regresar al menu principal ingrese: 2");
-        System.out.println("Si desea salir del programa puede ingresar cualquier otro caracter/numero");
+        System.out.println("Ingrese el nombre del empleado:");
+        String nombre = input.nextLine();
 
-        opcion = input.nextInt();
-
-        switch (opcion) {
-            case 1:
-                subMenuContrataciones();
-                break;
-            case 2:
-                menuBienvenida();
-                break;
-            default: System.out.println("Hasta luego");
-            break;
+        System.out.println("Ingrese la edad del empleado:");
+        while (!input.hasNextInt()) {
+            System.out.println("Edad inválida. Ingrese un número entero:");
+            input.next();
         }
-    }
-    public void subMenuContrataciones() {
-        System.out.println("Ingrese el nombre del empleado");
-        System.out.println("Ingrese la edad del empleado");
-        System.out.println("Ingrese el salario del empleado");
-
-        opcion = input.nextInt();
-
-        switch (opcion) {
-        }
-    }
-    public void menuDespedir() {
-        Empleados empleados1 = new Empleados(); // Crear una instancia de Empleados
-        empleados1.nombreEmpleados();
-        empleados1.edadEmpleados();
-
-        System.out.println("Para ver la lista de empleados despedidos ingrese: 1");
-        System.out.println("Si desea registrar un nuevo empleado despedido ingrese: 2");
-        System.out.println("Si desea salir del programa puede ingresar cualquier otro caracter numero");
-
-
-        opcion = input.nextInt();
+        int edad = input.nextInt();
         input.nextLine();
 
-        switch (opcion) {
-            case 1:
-
-                break;
-            case 2:
-                empleados1.transferirEmpleadoDespedido();
-                break;
-            default:
-                System.out.println("Hasta luego");
+        System.out.println("Ingrese el salario del empleado:");
+        while (!input.hasNextDouble()) {
+            System.out.println("Salario inválido. Ingrese un número decimal:");
+            input.next();
         }
+        double salario = input.nextDouble();
+        input.nextLine();
+
+        empleados.contratarEmpleado(nombre, edad, salario);
+
+        System.out.println("Empleado contratado con éxito");
+
+        menuBienvenida();
     }
-    public void subMenuDespedir() {
-        System.out.println("Seleccione al empleado por su numero de idetificacion en la lista");
-        System.out.println("¿Esta seguro que quiere registar al empleado" + "como despedido?");
-        System.out.println("Empleado despedido");
-        System.out.println("Para ver la lista de empleados despedidos ingrese: 1");
-        System.out.println("Para registrar otro empleado despedido ingrese 2");
-        System.out.println("Si desea dalir del programa puede ingresar cualquier otro caracter numero");
-        opcion = input.nextInt();
+    public void menuDespedir() {
+        System.out.println("Ingrese el nombre del empleado:");
+        String nombre = input.nextLine();
 
-        switch (opcion) {
-            case 1:
-                break;
-            case 2:
-                break;
-            default: System.out.println("Hasta luego");
-        }
+        empleados.despedirEmpleado(nombre);
+
+        System.out.println("Empleado despedido con éxito");
+
+        menuBienvenida();
     }
     public void menuModificarSalario() {
+        System.out.println("Ingrese el nombre del empleado:");
+        String nombre = input.nextLine();
+        System.out.println("Ingrese el porcentaje de aumento:");
+        double porcentaje = input.nextDouble();
+        input.nextLine();
 
+        empleados.modificarSalario(nombre, porcentaje);
 
-        opcion = input.nextInt();
+        System.out.println("Salario actualizado con éxito");
 
-        switch (opcion) {
-
-        }
+        menuBienvenida();
     }
 }
-

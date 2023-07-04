@@ -1,14 +1,23 @@
 import java.util.Scanner;
-
-public class Empleados {
+class Empleados {
     private String[] listaNombres;
     private int[] listaEdades;
+    private double[] listaSalarios;
     private String[] listaNombresDespedidos;
     private int[] listaEdadesDespedidos;
-
-    public void nombreEmpleados() {
-
+    private double[] listaSalariosDespedidos;
+    public Empleados() {
         listaNombres = new String[15];
+        listaEdades = new int[15];
+        listaSalarios = new double[15];
+        listaNombresDespedidos = new String[15];
+        listaEdadesDespedidos = new int[15];
+        listaSalariosDespedidos = new double[15];
+        nombreEmpleados();
+        edadEmpleados();
+        salarioEmpleados();
+    }
+    private void nombreEmpleados() {
         listaNombres[0] = "Ardeen Zanicchi Chinge";
         listaNombres[1] = "Lindsay Mularkey Lemoir";
         listaNombres[2] = "Murvyn Arnolds Shawell";
@@ -18,11 +27,9 @@ public class Empleados {
         listaNombres[6] = "King Havvock Dyke";
         listaNombres[7] = "Elisa Klugel Ryce";
         listaNombres[8] = "Ethe Eakley Boatright";
-        listaNombres[9] = "Gannie Frayling Fergus";
+        listaNombres[9] = "Gannie Frayling O'Fergus";
     }
-
-    public void edadEmpleados() {
-        listaEdades = new int[15];
+    private void edadEmpleados() {
         listaEdades[0] = 35;
         listaEdades[1] = 51;
         listaEdades[2] = 52;
@@ -34,90 +41,66 @@ public class Empleados {
         listaEdades[8] = 46;
         listaEdades[9] = 51;
     }
-
-    public void imprimirListaEmpleados() {
+    private void salarioEmpleados() {
+        listaSalarios[0] = 50000.0;
+        listaSalarios[1] = 60000.0;
+        listaSalarios[2] = 55000.0;
+        listaSalarios[3] = 45000.0;
+        listaSalarios[4] = 40000.0;
+        listaSalarios[5] = 70000.0;
+        listaSalarios[6] = 45000.0;
+        listaSalarios[7] = 55000.0;
+        listaSalarios[8] = 60000.0;
+        listaSalarios[9] = 50000.0;
+    }
+    public void listarEmpleados() {
         for (int i = 0; i < listaNombres.length; i++) {
-            System.out.println("Nombre: " + listaNombres[i] + ", Edad: " + listaEdades[i]);
+            if (listaNombres[i] != null) {
+                System.out.println("Nombre: " + listaNombres[i] + ", Edad: " + listaEdades[i] + ", Salario: " + listaSalarios[i]);
+            }
         }
     }
-
-    public void registrarEmpleados() {
-        Scanner input = new Scanner(System.in);
-        int indice = 10;
-        String respuesta = "";
-
-        while (indice < listaNombres.length) {
-            System.out.print("¿Desea ingresar un nuevo empleado? (s/n): ");
-            respuesta = input.nextLine();
-
-            if (respuesta.equalsIgnoreCase("s")) {
-                System.out.print("Ingrese el nombre completo del empleado: ");
-                listaNombres[indice] = input.nextLine();
-                System.out.print("Ingrese la edad del empleado: ");
-                listaEdades[indice] = input.nextInt();
-                input.nextLine();
-                indice++;
-            } else if (respuesta.equalsIgnoreCase("n")) {
+    public void contratarEmpleado(String nombre, int edad, double salario) {
+        for (int i = 0; i < listaNombres.length; i++) {
+            if (listaNombres[i] == null) {
+                listaNombres[i] = nombre;
+                listaEdades[i] = edad;
+                listaSalarios[i] = salario;
                 break;
-            } else {
-                System.out.println("Respuesta no válida. Por favor, ingrese 's' o 'n'.");
             }
         }
     }
-    public void nombresEmpleadosDepesdidos() {
-        listaNombresDespedidos = new String[15];
-        listaNombresDespedidos[0] = "Victor Ibarra";
-    }
-    public void edadesEmpleadosDespedidos() {
-        listaEdadesDespedidos = new int[15];
-        listaEdadesDespedidos[0] = 28;
-
-    }
-    public void transferirEmpleadoDespedido() {
-        Scanner input = new Scanner(System.in);
-        String respuesta;
-
-        do {
-            System.out.print("Ingrese el nombre que ha sido despedido: ");
-            String nombreEmpleado = input.nextLine();
-
-            int indiceEmpleado = -1;
-            for (int i = 0; i < listaNombres.length; i++) {
-                if (listaNombres[i].equalsIgnoreCase(nombreEmpleado)) {
-                    indiceEmpleado = i;
-                    break;
-                }
+    public void despedirEmpleado(String nombre) {
+        for (int i = 0; i < listaNombres.length; i++) {
+            if (listaNombres[i] != null && listaNombres[i].equalsIgnoreCase(nombre)) {
+                listaNombresDespedidos[i] = listaNombres[i];
+                listaEdadesDespedidos[i] = listaEdades[i];
+                listaSalariosDespedidos[i] = listaSalarios[i];
+                listaNombres[i] = null;
+                listaEdades[i] = 0;
+                listaSalarios[i] = 0;
+                break;
             }
-
-            if (indiceEmpleado != -1) {
-                if (listaNombresDespedidos == null) {
-                    listaNombresDespedidos = new String[1];
-                    listaEdadesDespedidos = new int[1];
-                } else {
-                    if (listaNombresDespedidos.length == listaEdadesDespedidos.length) {
-                        System.out.println("No hay espacio disponible en la lista de empleados despedidos");
-                        break;
-                    }
-                    String[] tempNombresDespedidos = new String[listaNombresDespedidos.length + 1];
-                    int[] tempEdadesDespedidos = new int[listaEdadesDespedidos.length + 1];
-                    System.arraycopy(listaNombresDespedidos, 0, tempNombresDespedidos, 0, listaNombresDespedidos.length);
-                    System.arraycopy(listaEdadesDespedidos, 0, tempEdadesDespedidos, 0, listaEdadesDespedidos.length);
-                    listaNombresDespedidos = tempNombresDespedidos;
-                    listaEdadesDespedidos = tempEdadesDespedidos;
-                }
-
-                // Transferir empleado
-                listaNombresDespedidos[listaNombresDespedidos.length - 1] = listaNombres[indiceEmpleado];
-                listaEdadesDespedidos[listaEdadesDespedidos.length - 1] = listaEdades[indiceEmpleado];
-
-                System.out.println("Los datos del empleado despedido ha sido transferidos");
-
-                System.out.print("¿Desea transferir otro empleado despedido? (s/n): ");
-                respuesta = input.nextLine();
-            } else {
-                System.out.println("Error: No se encontró ningún empleado con ese nombre");
-                respuesta = "n";
+        }
+    }
+    public void modificarSalario(String nombre, double porcentaje) {
+        for (int i = 0; i < listaNombres.length; i++) {
+            if (listaNombres[i] != null && listaNombres[i].equalsIgnoreCase(nombre)) {
+                double aumento = listaSalarios[i] * (porcentaje / 100);
+                listaSalarios[i] += aumento;
+                break;
             }
-        } while (respuesta.equalsIgnoreCase("s"));
+        }
+    }
+    public void imprimirListaEmpleadosDespedidos() {
+        System.out.println("Lista de empleados despedidos:");
+        for (int i = 0; i < listaNombresDespedidos.length; i++) {
+            if (listaNombresDespedidos[i] != null) {
+                System.out.println("Nombre: " + listaNombresDespedidos[i] + ", Edad: " + listaEdadesDespedidos[i] + ", Salario: " + listaSalariosDespedidos[i]);
+            }
+        }
     }
 }
+
+
+
